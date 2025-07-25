@@ -1,6 +1,7 @@
 import { WAMessage, WASocket } from '@whiskeysockets/baileys';
 import { CommandManager } from '../commands/commandManager';
 import { Logger } from '../utils/logger';
+import { ConnectionManager } from '../utils/connectionManager';
 
 export class MessageHandler {
     private commandManager: CommandManager;
@@ -8,7 +9,7 @@ export class MessageHandler {
 
     constructor(commandManager: CommandManager) {
         this.commandManager = commandManager;
-        this.prefix = process.env.BOT_PREFIX || '!';
+        this.prefix = process.env.BOT_PREFIX || '.';
     }
 
     async handle(message: WAMessage, socket: WASocket) {
@@ -37,20 +38,34 @@ export class MessageHandler {
         if (!commandName) return;
 
         try {
-            await this.commandManager.execute(commandName, args, {
-                message,
-                socket,
-                sender,
-                chatId,
-                isGroup,
-                messageText
-            });
+            await ConnectionManager.safeCommandExecution(
+                async () => {
+                    await this.commandManager.execute(commandName, args, {
+                        message,
+                        socket,
+                        sender,
+                        chatId,
+                        isGroup,
+                        messageText
+                    });
+                },
+                `execute command: ${commandName}`
+            );
         } catch (error) {
             Logger.error('❌ Error executing command:', error);
             
-            await socket.sendMessage(chatId, {
-                text: '❌ Terjadi kesalahan saat menjalankan perintah. Silakan coba lagi.'
-            });
+            try {
+                await ConnectionManager.safeMessageSend(
+                    async () => {
+                        await socket.sendMessage(chatId, {
+                            text: '❌ Terjadi kesalahan saat menjalankan perintah. Silakan coba lagi.'
+                        });
+                    },
+                    'send command error message'
+                );
+            } catch (sendError) {
+                Logger.error('❌ Gagal mengirim pesan error command:', sendError);
+            }
         }
     }
 
