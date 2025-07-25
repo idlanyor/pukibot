@@ -1,6 +1,6 @@
 import { WAMessage, WASocket } from '@whiskeysockets/baileys';
-import { CommandManager } from '../commands/commandManager.js';
-import { Logger } from '../utils/logger.js';
+import { CommandManager } from '../commands/commandManager';
+import { Logger } from '../utils/logger';
 
 export class MessageHandler {
     private commandManager: CommandManager;

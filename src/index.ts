@@ -6,13 +6,13 @@ import makeWASocket, {
     WAMessage,
     BaileysEventMap
 } from '@whiskeysockets/baileys';
-// import { Boom } from '@hapi/boom';
+import { Boom } from '@hapi/boom';
 import pino from 'pino';
 import qrcode from 'qrcode-terminal';
-import { MessageHandler } from './handlers/messageHandler.js';
-import { CommandManager } from './commands/commandManager.js';
-import { PterodactylAPI } from './services/pterodactylAPI.js';
-import { Logger } from './utils/logger.js';
+import { MessageHandler } from './handlers/messageHandler';
+import { CommandManager } from './commands/commandManager';
+import { PterodactylAPI } from './services/pterodactylAPI';
+import { Logger } from './utils/logger';
 
 config();
 
@@ -93,7 +93,7 @@ class WhatsAppBot {
                     text: `🤖 *${process.env.BOT_NAME || 'Pterodactyl Store Bot'}* telah online!\n\n` +
                           `⏰ Waktu: ${new Date().toLocaleString('id-ID')}\n` +
                           `🔧 Runtime: Bun ${process.versions.bun}\n` +
-                          `📦 Baileys: ${require('@whiskeysockets/baileys/package.json').version}`
+                          `📦 Baileys: ${await import('@whiskeysockets/baileys/package.json').then(m => m.default.version)}`
                 });
             }
         }

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Logger } from '../utils/logger.js';
+import { Logger } from '../utils/logger';
 
 export interface ServerInfo {
     attributes: {

@@ -1,6 +1,23 @@
-# Pterodactyl WhatsApp Bot
+# Pterodactyl WhatsApp Bot ✅ **WORKING**
 
 Bot WhatsApp untuk mengelola store Pterodactyl menggunakan library Baileys dengan runtime Bun.
+
+> **Status: ✅ FULLY FUNCTIONAL** - Bot telah diperbaiki dan siap digunakan!
+
+## 🚀 Quick Start
+
+1. **Konfigurasi environment:**
+   ```bash
+   # Edit file .env dan sesuaikan dengan kebutuhan Anda
+   nano .env
+   ```
+
+2. **Jalankan bot:**
+   ```bash
+   bun run start
+   ```
+
+3. **Scan QR Code dengan WhatsApp Web**
 
 ## 🚀 Fitur
 

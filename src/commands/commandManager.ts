@@ -1,6 +1,6 @@
 import { WAMessage, WASocket } from '@whiskeysockets/baileys';
-import { PterodactylAPI } from '../services/pterodactylAPI.js';
-import { Logger } from '../utils/logger.js';
+import { PterodactylAPI } from '../services/pterodactylAPI';
+import { Logger } from '../utils/logger';
 
 // Command interfaces
 export interface CommandContext {
