@@ -1,4 +1,4 @@
-import { WAMessage, WASocket } from '@whiskeysockets/baileys';
+import { WASocket } from '@whiskeysockets/baileys';
 import { PterodactylAPI } from '../services/pterodactylAPI';
 import { Logger } from '../utils/logger';
 import { ConnectionManager } from '../utils/connectionManager';

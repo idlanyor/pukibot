@@ -30,7 +30,8 @@ export class OrderManager {
         customerChatId: string,
         packageType: PackageType,
         duration: number,
-        customerDisplayName?: string
+        customerDisplayName?: string,
+        username?: string
     ): Promise<Order> {
         // Validate package type
         if (!Object.values(PackageType).includes(packageType)) {
@@ -80,7 +81,8 @@ export class OrderManager {
                 timestamp: new Date(),
                 updatedBy: 'system',
                 notes: 'Order created'
-            }]
+            }],
+            username
         };
 
         return await this.storage.createOrder(order);
@@ -351,6 +353,24 @@ export class OrderManager {
                 error: error.message
             };
         }
+    }
+
+    async completeOrder(orderId: string, serverId: string, notes?: string): Promise<Order | null> {
+        const order = await this.storage.getOrder(orderId);
+        if (!order) {
+            throw new Error(`Order not found: ${orderId}`);
+        }
+
+        // Set the server ID
+        await this.storage.updateOrder(orderId, { serverId });
+
+        // Update order status to completed
+        return await this.storage.updateOrderStatus(
+            orderId,
+            OrderStatus.COMPLETED,
+            'admin',
+            notes || 'Order completed manually'
+        );
     }
 
     async retryProvisioning(orderId: string): Promise<{ success: boolean; error?: string; credentials?: any }> {

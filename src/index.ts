@@ -131,13 +131,13 @@ class WhatsAppBot {
         this.socket.ev.on('messages.upsert', this.handleMessages.bind(this));
 
         // Handler untuk status online
-        this.socket.ev.on('presence.update', (presence) => {
-            this.logger.debug('Presence update:', presence);
+        this.socket.ev.on('presence.update', (presence: any) => {
+            this.logger.debug('Presence update:', String(presence));
         });
 
         // Handler untuk error socket
-        this.socket.ev.on("call", (call) => {
-            this.logger.debug('Incoming call:', call);
+        this.socket.ev.on("call", (call: any) => {
+            this.logger.debug('Incoming call:', String(call));
         });
     }
 

@@ -610,14 +610,14 @@ export class AdminPlugin extends BasePlugin {
             
             message += `📊 *Status Breakdown:*\n`;
             Object.entries(stats.ordersByStatus).forEach(([status, count]) => {
-                if (count > 0) {
+                if ((count as number) > 0) {
                     message += `• ${status}: ${count}\n`;
                 }
             });
 
             message += `\n📦 *Package Breakdown:*\n`;
             Object.entries(stats.ordersByPackage).forEach(([pkg, count]) => {
-                if (count > 0) {
+                if (count as number > 0) {
                     message += `• ${pkg.toUpperCase()}: ${count}\n`;
                 }
             });
@@ -840,7 +840,7 @@ export class AdminPlugin extends BasePlugin {
             if (status.configured) {
                 message += `📋 *Resource Mappings:*\n`;
                 for (const [packageType, mapping] of Object.entries(status.resourceMappings)) {
-                    message += `• ${packageType.toUpperCase()}: ${mapping.limits.memory}MB RAM, ${mapping.limits.cpu}% CPU\n`;
+                    message += `• ${packageType.toUpperCase()}: ${(mapping as any).limits.memory}MB RAM, ${(mapping as any).limits.cpu}% CPU\n`;
                 }
             } else {
                 message += `⚠️ *Konfigurasi Diperlukan:*\n`;

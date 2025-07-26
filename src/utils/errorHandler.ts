@@ -131,7 +131,7 @@ export class ErrorHandler {
 
         switch (errorType) {
             case 'timeout':
-                Logger.warn(`⏰ ${logMessage}: Timeout`, errorDetails);
+                Logger.warn(`⏰ ${logMessage}: Timeout`, .);
                 break;
             case 'network':
                 Logger.warn(`🌐 ${logMessage}: Network issue`, errorDetails);

@@ -164,7 +164,7 @@ export class Logger {
         logger.info({ emoji, ...args }, message);
     }
 
-    static warn(message: string, emoji?: string, ...args: any[]) {
+    static warn(message: string, emoji?: string, ...args: any[]): void {
         logger.warn({ emoji, ...args }, message);
     }
 

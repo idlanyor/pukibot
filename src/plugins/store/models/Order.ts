@@ -15,7 +15,7 @@ export enum PackageType {
     A4 = 'a4', // NodeJS Sepuh
     A5 = 'a5', // NodeJS Suhu
     A6 = 'a6', // NodeJS Pro Max
-    
+
     // VPS Packages (B1-B6)
     B1 = 'b1', // VPS Kroco
     B2 = 'b2', // VPS Karbit
@@ -23,7 +23,7 @@ export enum PackageType {
     B4 = 'b4', // VPS Sepuh
     B5 = 'b5', // VPS Suhu
     B6 = 'b6', // VPS Pro Max
-    
+
     // Python Packages (C1-C6)
     C1 = 'c1', // Python Kroco
     C2 = 'c2', // Python Karbit
@@ -34,25 +34,25 @@ export enum PackageType {
 
     // Legacy packages (for backward compatibility)
     NODEJS_KROCO = 'nodejs_kroco',
-    NODEJS_KARBIT = 'nodejs_karbit', 
+    NODEJS_KARBIT = 'nodejs_karbit',
     NODEJS_STANDAR = 'nodejs_standar',
     NODEJS_SEPUH = 'nodejs_sepuh',
     NODEJS_SUHU = 'nodejs_suhu',
     NODEJS_PRO_MAX = 'nodejs_pro_max',
     VPS_KROCO = 'vps_kroco',
     VPS_KARBIT = 'vps_karbit',
-    VPS_STANDAR = 'vps_standar', 
+    VPS_STANDAR = 'vps_standar',
     VPS_SEPUH = 'vps_sepuh',
     VPS_SUHU = 'vps_suhu',
     VPS_PRO_MAX = 'vps_pro_max',
     PYTHON_KROCO = 'python_kroco',
     PYTHON_KARBIT = 'python_karbit',
     PYTHON_STANDAR = 'python_standar',
-    PYTHON_SEPUH = 'python_sepuh', 
+    PYTHON_SEPUH = 'python_sepuh',
     PYTHON_SUHU = 'python_suhu',
     PYTHON_PRO_MAX = 'python_pro_max',
     BRONZE = 'bronze',
-    SILVER = 'silver', 
+    SILVER = 'silver',
     GOLD = 'gold',
     PLATINUM = 'platinum',
     DIAMOND = 'diamond'
@@ -73,6 +73,7 @@ export interface OrderItem {
 export interface Customer {
     phoneNumber: string;
     displayName?: string;
+    name?: string;
     chatId: string;
 }
 
@@ -90,6 +91,7 @@ export interface Order {
     adminNotes?: string;
     paymentProof?: string;
     serverId?: string; // Pterodactyl server ID when created
+    username?: string; // Custom username for Pterodactyl
 }
 
 export interface OrderStatusHistory {

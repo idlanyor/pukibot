@@ -332,7 +332,7 @@ export class MessageFormatter {
         return this.EMOJIS.info;
     }
 
-    private static getCategoryEmoji(categoryName: string): string {
+    public static getCategoryEmoji(categoryName: string): string {
         const name = categoryName.toLowerCase();
         if (name.includes('nodejs') || name.includes('javascript')) {
             return '🟢';

@@ -238,6 +238,7 @@ export class StorePlugin extends BasePlugin {
         
         const paketInput = args[0]?.toLowerCase();
         const durasi = parseInt(args[1]) || 1;
+        const username = args[2]; // Optional username
 
         if (!paketInput) {
             await this.sendError(context.socket, context.chatId,
@@ -275,7 +276,9 @@ export class StorePlugin extends BasePlugin {
                 context.sender,
                 context.chatId,
                 packageType,
-                durasi
+                durasi,
+                context.sender.split('@')[0],
+                username
             );
 
             // Send notifications

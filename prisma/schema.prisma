@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Package {
+  id              Int      @id @default(autoincrement())
+  type            String   @unique
+  name            String
+  ram             String
+  cpu             String
+  storage         String
+  bandwidth       String
+  price           Int
+  emoji           String
+  description     String?
+  category        String
+  eggId           Int?     @map("egg_id")
+  dockerImage     String?  @map("docker_image") @db.Text
+  startupCommand  String?  @map("startup_command") @db.Text
+  environment     String?  @db.Text // JSON string
+  limits          String?  @db.Text // JSON string
+  featureLimits   String?  @map("feature_limits") @db.Text // JSON string
+  nodeId          Int?     @map("node_id")
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  orders          Order[]
+  subscriptions   Subscription[]
+
+  @@map("packages")
+}
+
+model Order {
+  id              String   @id
+  customerPhone   String   @map("customer_phone")
+  customerName    String?  @map("customer_name")
+  username        String?
+  customerChatId  String   @map("customer_chat_id")
+  packageType     String   @map("package_type")
+  packageDuration Int      @map("package_duration")
+  packagePrice    Int      @map("package_price")
+  packageSpecs    String?  @map("package_specs") // JSON string
+  status          String
+  totalAmount     Int      @map("total_amount")
+  currency        String
+  notes           String?
+  adminNotes      String?  @map("admin_notes")
+  paymentProof    String?  @map("payment_proof")
+  serverId        String?  @map("server_id")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  package         Package         @relation(fields: [packageType], references: [type])
+  statusHistory   OrderStatusHistory[]
+  subscriptions   Subscription[]
+  serverMonitoring ServerMonitoring[]
+
+  @@index([customerPhone])
+  @@index([status])
+  @@index([packageType])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+model OrderStatusHistory {
+  id        Int      @id @default(autoincrement())
+  orderId   String   @map("order_id")
+  status    String
+  updatedBy String   @map("updated_by")
+  notes     String?
+  timestamp DateTime @default(now())
+
+  // Relations
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("order_status_history")
+}
+
+model Subscription {
+  id           Int      @id @default(autoincrement())
+  orderId      String   @map("order_id")
+  serverId     String   @map("server_id")
+  customerPhone String  @map("customer_phone")
+  packageType  String   @map("package_type")
+  status       String
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  order        Order    @relation(fields: [orderId], references: [id])
+  package      Package  @relation(fields: [packageType], references: [type])
+
+  @@index([customerPhone])
+  @@index([expiresAt])
+  @@map("subscriptions")
+}
+
+model ServerMonitoring {
+  id         Int      @id @default(autoincrement())
+  serverId   String   @map("server_id")
+  orderId    String?  @map("order_id")
+  name       String
+  status     String
+  resources  String?  // JSON string
+  limits     String?  // JSON string
+  lastCheck  DateTime @default(now()) @map("last_check")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  order      Order?   @relation(fields: [orderId], references: [id])
+
+  @@index([serverId])
+  @@map("server_monitoring")
+}

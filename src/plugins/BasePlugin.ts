@@ -6,7 +6,6 @@ import {
     IPlugin, 
     PluginMetadata, 
     Command, 
-    CommandContext, 
     PluginConfig,
     PluginDependencies 
 } from './types';
@@ -63,7 +62,7 @@ export abstract class BasePlugin implements IPlugin {
     // Configuration management
     configure(config: PluginConfig): void {
         this.config = { ...this.config, ...config };
-        Logger.debug(`⚙️ Configured plugin ${this.metadata.name}:`, this.config);
+        Logger.debug(`⚙️ Configured plugin ${this.metadata.name}:`, JSON.stringify(this.config));
     }
 
     // Utility methods for plugins
